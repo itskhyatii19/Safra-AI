@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Safra AI — Protect Your Digital Identity</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">🛡️ Safra AI</div>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#scan">Scan</a>
+      <a href="#dashboard">Dashboard</a>
+    </div>
+    <div class="nav-auth" id="navAuth">
+      <button class="btn-login" onclick="openModal('login')">Log In</button>
+      <button class="btn-signup" onclick="openModal('signup')">Sign Up</button>
+    </div>
+    <div class="nav-user" id="navUser" style="display:none">
+      <div class="user-avatar" id="userAvatar"></div>
+      <span class="user-name" id="userName"></span>
+      <button class="btn-logout" onclick="logout()">Sign Out</button>
+    </div>
+  </nav>
+
+  <!-- AUTH MODAL -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
+
+  <div class="modal" id="authModal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+
+    <!-- LOGIN FORM -->
+    <div id="loginForm">
+      <div class="modal-logo">🛡️ Safra AI</div>
+      <h2 class="modal-title">Welcome back</h2>
+      <p class="modal-sub">Sign in to your account to continue</p>
+      <div class="form-group">
+        <label>Email address</label>
+        <input type="email" id="loginEmail" placeholder="you@example.com" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter your password" />
+      </div>
+      <div class="form-error" id="loginError"></div>
+      <button class="btn-form" onclick="doLogin()">Sign In</button>
+      <p class="form-switch">Don't have an account? <a onclick="switchModal('signup')">Sign up free</a></p>
+    </div>
+
+    <!-- SIGNUP FORM -->
+    <div id="signupForm" style="display:none">
+      <div class="modal-logo">🛡️ Safra AI</div>
+      <h2 class="modal-title">Create your account</h2>
+      <p class="modal-sub">Free forever. No credit card needed.</p>
+      <div class="form-group">
+        <label>Full name</label>
+        <input type="text" id="signupName" placeholder="Your name" />
+      </div>
+      <div class="form-group">
+        <label>Email address</label>
+        <input type="email" id="signupEmail" placeholder="you@example.com" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="signupPassword" placeholder="Min. 6 characters" />
+      </div>
+      <div class="form-error" id="signupError"></div>
+      <button class="btn-form" onclick="doSignup()">Create Free Account</button>
+      <p class="form-switch">Already have an account? <a onclick="switchModal('login')">Sign in</a></p>
+    </div>
+  </div>
+
+  <!-- HOME SECTION -->
+  <section id="home" class="hero">
+    <div class="hero-badge">✨ Next-Generation Image Protection</div>
+    <h1>Take Control of Your<br/><span class="gradient-text">Digital Identity</span></h1>
+    <p>Safra AI uses advanced AI to detect misuse risks, add invisible watermarks, and protect your personal images from being exploited online.</p>
+    <div class="hero-buttons">
+      <button class="btn-primary" onclick="scrollToScan()">Scan an Image →</button>
+      <button class="btn-secondary" onclick="scrollToDashboard()">View Dashboard</button>
+    </div>
+
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>Risk Detection</h3>
+        <p>Analyse misuse risk before you post anywhere online.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>Image Protection</h3>
+        <p>Add invisible digital fingerprints to track your images.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <h3>AI Safety Advisor</h3>
+        <p>Get personalised tips to protect your digital identity.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔔</div>
+        <h3>Misuse Alerts</h3>
+        <p>Know where your image may have been shared without consent.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCAN SECTION -->
+  <section id="scan" class="scan-section">
+    <h2>Analyze & Protect</h2>
+    <p class="section-sub">Upload an image to detect risks and apply protective watermark.</p>
+
+    <div class="scan-layout">
+      <div class="upload-box" id="dropZone"
+           ondragover="event.preventDefault(); this.classList.add('drag-over')"
+           ondragleave="this.classList.remove('drag-over')"
+           ondrop="handleDrop(event)">
+        <div id="uploadContent">
+          <div class="upload-icon">☁️</div>
+          <h3>Drag & Drop Image</h3>
+          <p>Supports JPG, PNG, WEBP up to 10MB</p>
+          <label class="btn-browse">
+            Browse Files
+            <input type="file" id="imageInput" accept="image/*" onchange="handleFileSelect(event)" hidden/>
+          </label>
+        </div>
+        <img id="previewImg" src="" alt="preview" style="display:none; max-width:100%; border-radius:12px; margin-top:12px;"/>
+      </div>
+
+      <div class="results-box" id="resultsBox">
+        <div id="emptyState" class="empty-state">
+          <div style="font-size:48px">⚠️</div>
+          <p>Upload an image and run a scan to see the detailed risk analysis here.</p>
+        </div>
+        <div id="loadingState" class="loading-state" style="display:none">
+          <div class="spinner"></div>
+          <p>Analyzing your image...</p>
+        </div>
+        <div id="resultsContent" style="display:none"></div>
+      </div>
+    </div>
+
+    <div class="scan-buttons" id="scanButtons" style="display:none">
+      <button class="btn-scan" onclick="scanImage()">🔍 Scan for Risks</button>
+      <button class="btn-protect" onclick="protectImage()">🛡️ Protect This Image</button>
+    </div>
+  </section>
+
+  <!-- DASHBOARD SECTION -->
+  <section id="dashboard" class="dashboard-section">
+    <h2>Your Safety Dashboard</h2>
+    <p class="section-sub">Track all your scanned and protected images.</p>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num" id="statTotal">0</div>
+        <div class="stat-label">Total Scans</div>
+      </div>
+      <div class="stat-card protected">
+        <div class="stat-num" id="statProtected">0</div>
+        <div class="stat-label">Protected</div>
+      </div>
+      <div class="stat-card danger">
+        <div class="stat-num" id="statHighRisk">0</div>
+        <div class="stat-label">High Risk</div>
+      </div>
+      <div class="stat-card warning">
+        <div class="stat-num" id="statAlerts">0</div>
+        <div class="stat-label">Alerts</div>
+      </div>
+    </div>
+
+    <div id="imagesGrid" class="images-grid"></div>
+  </section>
+
+  <footer class="footer">
+    <p>🛡️ Safra AI — Protecting Digital Identities &nbsp;|&nbsp; Built for LifestyleTech Hackathon</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
