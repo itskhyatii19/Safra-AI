@@ -30,11 +30,9 @@
 
   <!-- AUTH MODAL -->
   <div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
-
   <div class="modal" id="authModal">
     <button class="modal-close" onclick="closeModal()">✕</button>
 
-    <!-- LOGIN FORM -->
     <div id="loginForm">
       <div class="modal-logo">🛡️ Safra AI</div>
       <h2 class="modal-title">Welcome back</h2>
@@ -52,7 +50,6 @@
       <p class="form-switch">Don't have an account? <a onclick="switchModal('signup')">Sign up free</a></p>
     </div>
 
-    <!-- SIGNUP FORM -->
     <div id="signupForm" style="display:none">
       <div class="modal-logo">🛡️ Safra AI</div>
       <h2 class="modal-title">Create your account</h2>
@@ -75,7 +72,7 @@
     </div>
   </div>
 
-  <!-- HOME SECTION -->
+  <!-- HOME -->
   <section id="home" class="hero">
     <div class="hero-badge">✨ Next-Generation Image Protection</div>
     <h1>Take Control of Your<br/><span class="gradient-text">Digital Identity</span></h1>
@@ -84,36 +81,18 @@
       <button class="btn-primary" onclick="scrollToScan()">Scan an Image →</button>
       <button class="btn-secondary" onclick="scrollToDashboard()">View Dashboard</button>
     </div>
-
     <div class="features">
-      <div class="feature-card">
-        <div class="feature-icon">🔍</div>
-        <h3>Risk Detection</h3>
-        <p>Analyse misuse risk before you post anywhere online.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🛡️</div>
-        <h3>Image Protection</h3>
-        <p>Add invisible digital fingerprints to track your images.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🤖</div>
-        <h3>AI Safety Advisor</h3>
-        <p>Get personalised tips to protect your digital identity.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🔔</div>
-        <h3>Misuse Alerts</h3>
-        <p>Know where your image may have been shared without consent.</p>
-      </div>
+      <div class="feature-card"><div class="feature-icon">🔍</div><h3>Risk Detection</h3><p>Analyse misuse risk before you post anywhere online.</p></div>
+      <div class="feature-card"><div class="feature-icon">🛡️</div><h3>Image Protection</h3><p>Add invisible digital fingerprints to track your images.</p></div>
+      <div class="feature-card"><div class="feature-icon">🤖</div><h3>AI Safety Advisor</h3><p>Get personalised AI-generated tips to protect your digital identity.</p></div>
+      <div class="feature-card"><div class="feature-icon">🔔</div><h3>Misuse Alerts</h3><p>Know where your image may have been shared without consent.</p></div>
     </div>
   </section>
 
-  <!-- SCAN SECTION -->
+  <!-- SCAN -->
   <section id="scan" class="scan-section">
     <h2>Analyze & Protect</h2>
     <p class="section-sub">Upload an image to detect risks and apply protective watermark.</p>
-
     <div class="scan-layout">
       <div class="upload-box" id="dropZone"
            ondragover="event.preventDefault(); this.classList.add('drag-over')"
@@ -138,7 +117,7 @@
         </div>
         <div id="loadingState" class="loading-state" style="display:none">
           <div class="spinner"></div>
-          <p>Analyzing your image...</p>
+          <p>Analyzing your image with AI...</p>
         </div>
         <div id="resultsContent" style="display:none"></div>
       </div>
@@ -148,32 +127,29 @@
       <button class="btn-scan" onclick="scanImage()">🔍 Scan for Risks</button>
       <button class="btn-protect" onclick="protectImage()">🛡️ Protect This Image</button>
     </div>
+
+    <!-- Reverse Image Search -->
+    <div class="reverse-search" id="reverseSearch" style="display:none">
+      <h3>🔎 Reverse Image Search</h3>
+      <p>Manually check if your image appears elsewhere online:</p>
+      <div class="search-links">
+        <a id="googleLink" href="https://images.google.com" target="_blank" class="search-btn google">Google Images</a>
+        <a href="https://tineye.com" target="_blank" class="search-btn tineye">TinEye</a>
+        <a href="https://yandex.com/images" target="_blank" class="search-btn yandex">Yandex Images</a>
+      </div>
+    </div>
   </section>
 
-  <!-- DASHBOARD SECTION -->
+  <!-- DASHBOARD -->
   <section id="dashboard" class="dashboard-section">
     <h2>Your Safety Dashboard</h2>
     <p class="section-sub">Track all your scanned and protected images.</p>
-
     <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-num" id="statTotal">0</div>
-        <div class="stat-label">Total Scans</div>
-      </div>
-      <div class="stat-card protected">
-        <div class="stat-num" id="statProtected">0</div>
-        <div class="stat-label">Protected</div>
-      </div>
-      <div class="stat-card danger">
-        <div class="stat-num" id="statHighRisk">0</div>
-        <div class="stat-label">High Risk</div>
-      </div>
-      <div class="stat-card warning">
-        <div class="stat-num" id="statAlerts">0</div>
-        <div class="stat-label">Alerts</div>
-      </div>
+      <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Total Scans</div></div>
+      <div class="stat-card protected"><div class="stat-num" id="statProtected">0</div><div class="stat-label">Protected</div></div>
+      <div class="stat-card danger"><div class="stat-num" id="statHighRisk">0</div><div class="stat-label">High Risk</div></div>
+      <div class="stat-card warning"><div class="stat-num" id="statAlerts">0</div><div class="stat-label">Alerts</div></div>
     </div>
-
     <div id="imagesGrid" class="images-grid"></div>
   </section>
 
